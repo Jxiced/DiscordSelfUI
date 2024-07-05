@@ -1,0 +1,59 @@
+﻿@using DiscordSelfUI.Data
+@model RaidModel
+@{
+    ViewData["Title"] = "Raid Server - " + Model.Name;
+}
+
+<div class="text-center">
+    <div class="col">
+        <img class="rounded" src="@Model.IconUrl" height="128" width="128" />
+    </div>
+    <div class="col">
+        <h1 class="display-4">@Model.Name</h1>
+    </div>
+
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-3">
+                <form asp-action="Index" asp-controller="Raid" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+                    <div class="form-group mb-2">
+                        <input asp-for="File" class="form-control" type="file" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Load Bots from File" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <h3 class="mb-2"> Loaded Bots: @(Model.Bots != null ? Model.Bots.Count : 0)</h3>
+                @if (Model.Bots != null)
+                {
+                    <ul class="text-start list-group">
+                        @foreach (var bot in Model.Bots)
+                        {
+                            <a href="@(bot.CurrentUser.Id.ToString() == ViewBag.DiscordUserId ? Url.Action("Index", "Home") : Url.Action("Index", "User", new { id = bot.CurrentUser.Id }))" class="list-group-item list-group-item-action">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <i class="fa fa-solid fa-user-secret"></i>
+                                    </div>
+                                    <div class="col">
+                                        @bot.CurrentUser.Username
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+    </script>
+}

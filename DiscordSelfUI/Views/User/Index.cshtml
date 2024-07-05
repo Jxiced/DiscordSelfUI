@@ -1,0 +1,27 @@
+﻿@using DiscordSelfUI.Data
+@model UserModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <div class="col">
+        <img class="rounded" src="@Model.AvatarUrl" />
+    </div>
+    <div class="col">
+        <h1 class="display-4">@Model.Username</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Your Mutuals</h3>
+                <ul class="list-group">
+                    
+                </ul>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+</div>

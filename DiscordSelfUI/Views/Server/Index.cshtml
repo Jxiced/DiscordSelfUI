@@ -1,0 +1,56 @@
+﻿@using DiscordSelfUI.Data
+@model ServerModel
+@{
+    ViewData["Title"] = "View Server - " + Model.Name;
+}
+
+<div class="text-center">
+    <div class="col">
+        <img class="rounded" src="@Model.IconUrl" height="128" width="128" />
+    </div>
+    <div class="col">
+        <h1 class="display-4">@Model.Name</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <h3>Text Channels</h3>
+                <ul class="text-start list-group">
+                    @foreach (var channel in Model.TextChannels)
+                    {
+                        <a href="@Url.Action("Index", "Channel", new { id = channel.Id })" class="list-group-item list-group-item-action">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <i class="fa fa-solid fa-comment"></i>
+                                </div>
+                                <div class="col">
+                                    @channel.Name
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </ul>
+            </div>
+
+            <div class="col-sm-3">
+                <h3>Voice Channels</h3>
+                <ul class="text-start list-group">
+                    @foreach (var channel in Model.VoiceChannels)
+                    {
+                        <a href="@Url.Action("Index", "Channel", new { id = channel.Id })" class="list-group-item list-group-item-action">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <i class="fa fa-solid fa-headphones"></i>
+                                </div>
+                                <div class="col">
+                                    @channel.Name
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
