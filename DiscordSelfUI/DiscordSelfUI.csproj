@@ -1,10 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Discord.NET_Reference_DLLs\**" />
+    <Content Remove="Discord.NET_Reference_DLLs\**" />
+    <EmbeddedResource Remove="Discord.NET_Reference_DLLs\**" />
+    <None Remove="Discord.NET_Reference_DLLs\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -16,22 +23,22 @@
 
   <ItemGroup>
     <Reference Include="Discord.Net.Commands">
-      <HintPath>..\..\..\..\Desktop\net6.0\Discord.Net.Commands.dll</HintPath>
+      <HintPath>Discord.NET_Reference_DLLs\Discord.Net.Commands.dll</HintPath>
     </Reference>
     <Reference Include="Discord.Net.Core">
-      <HintPath>..\..\..\..\Desktop\net6.0\Discord.Net.Core.dll</HintPath>
+      <HintPath>Discord.NET_Reference_DLLs\Discord.Net.Core.dll</HintPath>
     </Reference>
     <Reference Include="Discord.Net.Interactions">
-      <HintPath>..\..\..\..\Desktop\net6.0\Discord.Net.Interactions.dll</HintPath>
+      <HintPath>Discord.NET_Reference_DLLs\Discord.Net.Interactions.dll</HintPath>
     </Reference>
     <Reference Include="Discord.Net.Rest">
-      <HintPath>..\..\..\..\Desktop\net6.0\Discord.Net.Rest.dll</HintPath>
+      <HintPath>Discord.NET_Reference_DLLs\Discord.Net.Rest.dll</HintPath>
     </Reference>
     <Reference Include="Discord.Net.Webhook">
-      <HintPath>..\..\..\..\Desktop\net6.0\Discord.Net.Webhook.dll</HintPath>
+      <HintPath>Discord.NET_Reference_DLLs\Discord.Net.Webhook.dll</HintPath>
     </Reference>
     <Reference Include="Discord.Net.WebSocket">
-      <HintPath>..\..\..\..\Desktop\net6.0\Discord.Net.WebSocket.dll</HintPath>
+      <HintPath>Discord.NET_Reference_DLLs\Discord.Net.WebSocket.dll</HintPath>
     </Reference>
   </ItemGroup>
 
