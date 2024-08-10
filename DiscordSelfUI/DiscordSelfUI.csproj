@@ -7,18 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\**" />
     <Compile Remove="Discord.NET_Reference_DLLs\**" />
+    <Content Remove="Areas\**" />
     <Content Remove="Discord.NET_Reference_DLLs\**" />
+    <EmbeddedResource Remove="Areas\**" />
     <EmbeddedResource Remove="Discord.NET_Reference_DLLs\**" />
+    <None Remove="Areas\**" />
     <None Remove="Discord.NET_Reference_DLLs\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\" />
   </ItemGroup>
 
   <ItemGroup>
