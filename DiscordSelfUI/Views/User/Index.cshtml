@@ -15,9 +15,34 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <h3>Your Mutuals</h3>
+                <h3>Mutual Servers</h3>
                 <ul class="list-group">
-                    
+                    @if (Model.MutualGuilds != null)
+                    {
+                        foreach (var guild in Model.MutualGuilds)
+                        {
+                            <div class="btn-group">
+                                <a href="@Url.Action("Index", "Server", new { id = guild.Id })" class="list-group-item list-group-item-action border border-secondary mb-1" type="button">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <img class="rounded" src="@guild.IconUrl" width="30" height="30" />
+                                        </div>
+                                        <div class="text-start col">
+                                            @guild.Name
+                                        </div>
+                                    </div>
+                                </a>
+                                <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle dropdown-toggle-split mb-1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="@Url.Action("Index", "Raid", new { id = guild.Id })">Raid</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("LeaveServer", "Server", new { id = guild.Id })">Leave Server</a></li>
+                                </ul>
+                            </div>
+                        }
+                    }
                 </ul>
             </div>
             <div class="col">

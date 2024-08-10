@@ -42,4 +42,12 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\User\Message.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\User\Message.cshtml" />
+  </ItemGroup>
+
 </Project>

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace DiscordSelfUI.Controllers
 {
-    public class RaidController(IMainClient client) : Controller
+    public partial class RaidController(IMainClient client) : Controller
     {
         [Route("Raid/{id}")]
         public IActionResult Index(ulong id)
@@ -52,13 +52,13 @@ namespace DiscordSelfUI.Controllers
                 stream.Seek(0, SeekOrigin.Begin);
 
                 using var reader = new StreamReader(stream);
-                model.Bots = new List<DiscordSocketClient>();
+                model.Bots = [];
 
                 string? line;
                 var tokens = new List<string>();
                 while ((line = await reader.ReadLineAsync()) != null)
                 {
-                    if (Regex.Match(line.Trim(), "^(mfa\\.[a-z0-9_-]{20,}|[a-zA-Z0-9_-]{23,28}\\.[a-zA-Z0-9_-]{6,7}\\.[a-zA-Z0-9_-]{27,})$").Success)
+                    if (MyRegex().Match(line.Trim()).Success)
                     {
                         tokens.Add(line.Trim().Split("\t")[0]);
                     }
@@ -70,7 +70,9 @@ namespace DiscordSelfUI.Controllers
                     if (bot != null)
                     {
                         if (!model.Bots.Contains(bot))
+                        {
                             model.Bots.Add(bot);
+                        }
                     }
                 }
 
@@ -96,7 +98,7 @@ namespace DiscordSelfUI.Controllers
 
         public async Task<DiscordSocketClient?[]> LoadMultipleBots(IEnumerable<string> tokens)
         {
-            var tasks = tokens.Select(token => LoadBot(token)).ToList();
+            var tasks = tokens.Select(LoadBot).ToList();
             return await Task.WhenAll(tasks);
         }
 
@@ -125,5 +127,8 @@ namespace DiscordSelfUI.Controllers
                 return null;
             }
         }
+
+        [GeneratedRegex("^(mfa\\.[a-z0-9_-]{20,}|[a-zA-Z0-9_-]{23,28}\\.[a-zA-Z0-9_-]{6,7}\\.[a-zA-Z0-9_-]{27,})$")]
+        private static partial Regex MyRegex();
     }
 }

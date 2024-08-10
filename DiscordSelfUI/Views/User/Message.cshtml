@@ -1,0 +1,96 @@
+﻿@using DiscordSelfUI.Data
+@model UserMessageModel
+
+@{
+    ViewBag.Title = "Message User";
+}
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Message</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Message sent!
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2>Message User</h2>
+
+    <form id="messageForm">
+        <div id="messageLengthAlert" style="display: none;" class="form-group mt-3">
+            <div class="alert alert-warning">This message will be sent as a text file due to the length of the message being over @Model.MaxMessageLength characters.</div>
+        </div>
+
+        <div class="form-group mt-3">
+            <textarea class="form-control" id="message" name="message" placeholder="Type your message here..."></textarea>
+        </div>
+
+        <div class="float-end">
+            <div class="flex-lg-row mt-3 mb-3">
+                <label for="ttsCheckbox">Text-to-Speech</label>
+                <input id="ttsCheckbox" type="checkbox" class="form-check-input" />
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="button" class="btn btn-secondary" id="clearButton">Clear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#message").on("change input", function () {
+                var msg = $(this).val();
+
+                if (msg.length > @Model.MaxMessageLength) {
+                    $("#messageLengthAlert").show();
+                } else {
+                    $("#messageLengthAlert").hide();
+                }
+            });
+        });
+
+        $("#clearButton").on("click", function () {
+            $("#message").val("");
+            $("#message").trigger("change");
+        });
+
+        $("#messageForm").on("submit", function (e) {
+            e.preventDefault();
+
+            var message = $("#message").val();
+            var tts = $("#ttsCheckbox").val();
+
+            const toast = $('#liveToast');
+
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
+
+            $.post({
+                url: "@Url.Action("Message", "User", new { id = Model.Id })",
+                data: { message, tts },
+                success: function (resp) {
+                    if (resp.error) {
+                        $('#liveToast .toast-body').val("Error sending message!");
+                    } else {
+                        $('#liveToast .toast-body').val("Message sent!");
+
+                        $("#message").val("");
+                        $("#message").trigger("change");
+                    }
+
+                    toastBootstrap.show();
+                }
+            });
+        });
+    </script>
+}

@@ -56,6 +56,34 @@
                                     </div>
                                     <div class="text-start col">
                                         @friend.Recipient.Username
+                                        @if (friend.Recipient.IsBot)
+                                        {
+                                            <span class="badge bg-primary">Bot</span>
+                                        }
+                                        else
+                                        {
+                                            switch (friend.Recipient.Status)
+                                            {
+                                                case Discord.UserStatus.Online:
+                                                    <span class="badge bg-success">Online</span>
+                                                    break;
+                                                case Discord.UserStatus.DoNotDisturb:
+                                                    <span class="badge bg-danger">Do Not Disturb</span>
+                                                    break;
+                                                case Discord.UserStatus.Idle:
+                                                    <span class="badge bg-warning">Idle</span>
+                                                    break;
+                                                case Discord.UserStatus.Offline:
+                                                    <span class="badge bg-secondary">Offline</span>
+                                                    break;
+                                                case Discord.UserStatus.Invisible:
+                                                    <span class="badge bg-secondary">Invisible</span>
+                                                    break;
+                                                default:
+                                                    <span class="badge bg-info">Unknown</span>
+                                                    break;
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </a>
@@ -63,6 +91,7 @@
                                 <span class="visually-hidden">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Message", "User", new { id = friend.Recipient.Id })">Message</a></li>
                                 <li><a class="dropdown-item" href="@Url.Action("RemoveFriend", "User", new { id = friend.Recipient.Id })">Remove Friend</a></li>
                             </ul>
                         </div>

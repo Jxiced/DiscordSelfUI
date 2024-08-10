@@ -36,6 +36,11 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.MapControllerRoute(
+    name: "UserMessage",
+    pattern: "{controller=Home}/{id?}/{action=Message}"
+);
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 

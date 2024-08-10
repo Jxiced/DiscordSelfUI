@@ -9,5 +9,7 @@ namespace DiscordSelfUI.Data
         public string Username { get; set; }
 
         public string AvatarUrl { get; set; }
+
+        public IEnumerable<SocketGuild>? MutualGuilds { get; set; }
     }
 }

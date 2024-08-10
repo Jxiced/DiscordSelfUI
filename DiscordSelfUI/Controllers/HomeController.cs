@@ -32,7 +32,7 @@ namespace DiscordSelfUI.Controllers
                 Username = client.MainClient.CurrentUser.Username,
                 Email = client.MainClient.CurrentUser.Email,
                 AvatarUrl = avatarUrl ?? client.MainClient.CurrentUser.GetDefaultAvatarUrl(),
-                Guilds = client.MainClient.Guilds.ToList(),
+                Guilds = [.. client.MainClient.Guilds],
                 Friends = await client.MainClient.GetDMChannelsAsync()
             };
 
