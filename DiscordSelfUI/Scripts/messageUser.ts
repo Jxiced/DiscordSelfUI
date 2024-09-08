@@ -68,8 +68,6 @@ if (messageFormElement) {
                     errorAlertContainer.style.display = "none";
 
                     message.value = "";
-
-                    message.dispatchEvent(new Event("change"));
                 } else {
                     if (data.error) {
                         errorAlertContainer.style.display = "block";
