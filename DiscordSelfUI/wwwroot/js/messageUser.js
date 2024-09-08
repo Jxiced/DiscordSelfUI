@@ -52,7 +52,6 @@ if (messageFormElement) {
                 if (typeof data === "string") {
                     errorAlertContainer_1.style.display = "none";
                     message_2.value = "";
-                    message_2.dispatchEvent(new Event("change"));
                 }
                 else {
                     if (data.error) {
