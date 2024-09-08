@@ -54,7 +54,7 @@ namespace DiscordSelfUI.Controllers
 
             var nitroType = client.MainClient.CurrentUser.PremiumType;
 
-            var userModel = new UserMessageModel()
+            var userModel = new UserMessageModel
             {
                 Id = user.Id,
                 Username = user.Username,
@@ -83,20 +83,16 @@ namespace DiscordSelfUI.Controllers
             }
 
             var nitroType = client.MainClient.CurrentUser.PremiumType;
-            var messageLength = 2000;
 
-            if (nitroType != PremiumType.NitroBasic && nitroType != PremiumType.None && messageLength == 2000)
-            {
-                messageLength += messageLength;
-            }
+            model.MaxMessageLength = (nitroType == PremiumType.None && nitroType == PremiumType.NitroBasic) ? 2000 : 4000;
 
-            if (model.Message.Length < messageLength)
+            if (model.Message.Length < model.MaxMessageLength)
             {
                 await socketUser.SendMessageAsync(model.Message, model.TTS);
             }
             else
             {
-                var stream = new MemoryStream();
+                using var stream = new MemoryStream();
                 var textBytes = Encoding.ASCII.GetBytes(model.Message);
                 await stream.WriteAsync(textBytes);
 

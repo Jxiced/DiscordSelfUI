@@ -5,17 +5,8 @@
     ViewBag.Title = "Message User";
 }
 
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Message</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            Message sent!
-        </div>
-    </div>
-</div>
+<input type="hidden" value="@Model.Id" id="modelId" />
+<input type="hidden" value="@Model.MaxMessageLength" id="maxLength" />
 
 <div class="container mt-5">
     <h2>Message User</h2>
@@ -23,6 +14,10 @@
     <form id="messageForm">
         <div id="messageLengthAlert" style="display: none;" class="form-group mt-3">
             <div class="alert alert-warning">This message will be sent as a text file due to the length of the message being over @Model.MaxMessageLength characters.</div>
+        </div>
+
+        <div id="errorAlertContainer" style="display: none;" class="form-group mt-3">
+            <div id="errorAlert" class="alert alert-danger">An error occured sending the message, please try again.</div>
         </div>
 
         <div class="form-group mt-3">
@@ -47,50 +42,5 @@
 
 @section Scripts
 {
-    <script type="text/javascript">
-        $(function () {
-            $("#message").on("change input", function () {
-                var msg = $(this).val();
-
-                if (msg.length > @Model.MaxMessageLength) {
-                    $("#messageLengthAlert").show();
-                } else {
-                    $("#messageLengthAlert").hide();
-                }
-            });
-        });
-
-        $("#clearButton").on("click", function () {
-            $("#message").val("");
-            $("#message").trigger("change");
-        });
-
-        $("#messageForm").on("submit", function (e) {
-            e.preventDefault();
-
-            var message = $("#message").val();
-            var tts = $("#ttsCheckbox").val();
-
-            const toast = $('#liveToast');
-
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast);
-
-            $.post({
-                url: "@Url.Action("Message", "User", new { id = Model.Id })",
-                data: { message, tts },
-                success: function (resp) {
-                    if (resp.error) {
-                        $('#liveToast .toast-body').val("Error sending message!");
-                    } else {
-                        $('#liveToast .toast-body').val("Message sent!");
-
-                        $("#message").val("");
-                        $("#message").trigger("change");
-                    }
-
-                    toastBootstrap.show();
-                }
-            });
-        });
-    </script>
+    <script type="text/javascript" src="~/js/messageUser.js"></script>
 }
